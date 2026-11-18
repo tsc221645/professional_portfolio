@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio fullstack con Vue 3, Vite y Node.js",
+  "scripts": {
+    "dev": "concurrently \"vite\" \"node server.js\"",
+    "build": "vite build",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "concurrently": "latest",
+    "vite": "latest",
+    "vue": "latest"
+  }
+}
