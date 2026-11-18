@@ -12,6 +12,14 @@ npm start
 
 Abre `http://localhost:3000`.
 
+## GitHub Pages
+
+El workflow `.github/workflows/deploy-pages.yml` construye el proyecto Vue y lo publica automáticamente en GitHub Pages cada vez que haces push a `main`.
+
+En GitHub, activa Pages desde `Settings > Pages > Source: GitHub Actions`.
+
+GitHub Pages despliega el frontend estático. El backend Node.js del formulario necesita un servicio separado para funcionar en producción.
+
 Endpoints:
 
 - `GET /api/projects` — proyectos del portfolio.
