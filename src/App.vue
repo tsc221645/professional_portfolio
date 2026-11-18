@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
+import siteLogo from "./assets/logo/atschen_dev_logo.png";
 import profilePicture from "./assets/github/profile_picture.png";
 import predictGuardPreviewOne from "./assets/project_previews/predictguard1.png";
 import predictGuardPreviewTwo from "./assets/project_previews/predictguard2.png";
 import screenSaverPreviewOne from "./assets/project_previews/screensaver1.png";
 import screenSaverPreviewTwo from "./assets/project_previews/screensaver2.png";
+import roadGuardPreview from "./assets/project_previews/roadguard.png";
 
 const menuOpen = ref(false);
 const activeSection = ref("home");
@@ -22,8 +24,10 @@ const technologyCategories = [
 ];
 const selectedCategory = ref("All");
 const profileImage = profilePicture;
+const pageLogo = siteLogo;
 const projectPreviewImages = {
-  RoadGuard: [predictGuardPreviewOne, predictGuardPreviewTwo],
+  RoadGuard: [roadGuardPreview],
+  PredictGuard: [predictGuardPreviewOne, predictGuardPreviewTwo],
   "Screen Saver": [screenSaverPreviewOne, screenSaverPreviewTwo],
 };
 const technologies = [
@@ -50,7 +54,7 @@ const technologies = [
   {
     name: "Rust",
     category: "Languages",
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg",
   },
   {
     name: "C / C++",
@@ -119,17 +123,35 @@ function getProjectPreview(project) {
 const fallbackProjects = [
   {
     title: "RoadGuard",
-    type: "Python · computer vision",
+    type: "Python / computer vision",
+    tags: ["Python", "Computer Vision", "AI"],
     description:
       "A computer vision and artificial intelligence project focused on road safety.",
     url: "https://github.com/tsc221645/roadguard",
   },
   {
+    title: "PredictGuard",
+    type: "Python / deep learning",
+    tags: ["Python", "Deep Learning", "Computer Vision"],
+    description:
+      "A deep learning project focused on predictive analysis and intelligent systems.",
+    url: "https://github.com/tsc221645/deep_learning_proyecto_final",
+  },
+  {
     title: "Screen Saver",
     type: "Creative coding",
+    tags: ["Python", "Pygame", "Pixel Art"],
     description:
       "A pixel-art visual experience with seasonal scenes, animated details, and a playful atmosphere.",
-    url: null,
+    url: "https://github.com/Cisco890/proyecto1_paralelas",
+  },
+  {
+    title: "ASL using CPU and CUDA",
+    type: "Python / parallel computing",
+    tags: ["Python", "Parallel Computing", "Algorithms"],
+    description:
+      "A parallel computing project focused on algorithms, performance, and distributed execution.",
+    url: "https://github.com/tsc221645/paralela_proyecto_3",
   },
 ];
 
@@ -175,6 +197,7 @@ async function sendMessage() {
 }
 
 onMounted(() => {
+  document.title = "Ana Laura Tschen Moscoso · Full-Stack Developer";
   loadProjects();
   observer = new IntersectionObserver(
     (entries) =>
@@ -197,8 +220,9 @@ onUnmounted(() => observer?.disconnect());
   <header class="site-header">
     <nav class="nav">
       <a class="brand" href="#home"
-        ><span class="brand-mark">{ }</span
-        ><span>ana tschen<span class="dot">.</span>dev</span></a
+        ><img class="brand-logo" :src="pageLogo" alt="Atschen Dev logo" /><span
+          >ana tschen<span class="dot">.</span>dev</span
+        ></a
       >
       <button
         class="menu-toggle"
@@ -229,7 +253,7 @@ onUnmounted(() => observer?.disconnect());
 
   <main>
     <section id="home" class="section hero">
-      <div class="hero-copy reveal">
+      <div class="hero-copy reveal visible">
         <div class="eyebrow">hello, I’m a full-stack developer</div>
         <h1>I turn ideas into <em>experiences.</em></h1>
         <p>
@@ -241,7 +265,7 @@ onUnmounted(() => observer?.disconnect());
           ><a class="button ghost" href="#about">about me</a>
         </div>
       </div>
-      <div class="hero-art reveal">
+      <div class="hero-art reveal visible">
         <div class="code-card">
           <div class="window-bar"><i></i><i></i><i></i></div>
           <code
@@ -305,11 +329,12 @@ onUnmounted(() => observer?.disconnect());
           {{ category }}
         </button>
       </div>
-      <div class="tech-grid">
+      <TransitionGroup name="toolkit" tag="div" class="tech-grid">
         <article
-          v-for="tech in filteredTechnologies()"
+          v-for="(tech, index) in filteredTechnologies()"
           :key="tech.name"
           class="tech-card"
+          :style="{ '--card-delay': `${index * 55}ms` }"
         >
           <span class="tech-logo"
             ><img :src="tech.logo" :alt="`${tech.name} logo`"
@@ -319,12 +344,12 @@ onUnmounted(() => observer?.disconnect());
             ><small>{{ tech.category }}</small>
           </div>
         </article>
-      </div>
+      </TransitionGroup>
     </section>
 
     <section id="projects" class="section reveal">
       <div class="section-heading">
-        <h2>Proyectos.</h2>
+        <h2>Projects.</h2>
         <span>03 / github</span>
       </div>
       <div class="projects-grid">
@@ -360,9 +385,12 @@ onUnmounted(() => observer?.disconnect());
           </div>
           <div class="project-info">
             <div>
-              <small>0{{ index + 1 }} · {{ project.type }}</small>
+              <small>0{{ index + 1 }} / {{ project.type }}</small>
               <h3>{{ project.title }}</h3>
               <p>{{ project.description }}</p>
+              <div class="project-tags">
+                <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+              </div>
             </div>
             <a
               v-if="project.url"
@@ -370,7 +398,7 @@ onUnmounted(() => observer?.disconnect());
               :href="project.url"
               target="_blank"
               rel="noreferrer"
-              >ver en GitHub</a
+              >view on GitHub</a
             >
             <span v-else class="project-link project-link-disabled">preview only</span>
           </div>

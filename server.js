@@ -7,17 +7,35 @@ const root = path.join(__dirname, "dist");
 const projects = [
   {
     title: "RoadGuard",
-    type: "Python · computer vision",
+    type: "Python / computer vision",
+    tags: ["Python", "Computer Vision", "AI"],
     description:
       "A computer vision and artificial intelligence project focused on road safety.",
     url: "https://github.com/tsc221645/roadguard",
   },
   {
+    title: "PredictGuard",
+    type: "Python / deep learning",
+    tags: ["Python", "Deep Learning", "Computer Vision"],
+    description:
+      "A deep learning project focused on predictive analysis and intelligent systems.",
+    url: "https://github.com/tsc221645/deep_learning_proyecto_final",
+  },
+  {
     title: "Screen Saver",
     type: "Creative coding",
+    tags: ["Python", "Pygame", "Pixel Art"],
     description:
       "A pixel-art visual experience with seasonal scenes, animated details, and a playful atmosphere.",
-    url: null,
+    url: "https://github.com/Cisco890/proyecto1_paralelas",
+  },
+  {
+    title: "ASL using CPU and CUDA",
+    type: "Python / parallel computing",
+    tags: ["Python", "Parallel Computing", "Algorithms"],
+    description:
+      "A parallel computing project focused on algorithms, performance, and distributed execution.",
+    url: "https://github.com/tsc221645/paralela_proyecto_3",
   },
 ];
 function send(res, status, body, type = "application/json") {
